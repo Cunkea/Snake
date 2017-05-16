@@ -20,10 +20,10 @@ public class RenderPanel extends JPanel {
 	public String str;
 
 	protected void paintComponent(Graphics g) {
-
 		super.paintComponent(g);
-		Snake snake = Snake.snake;
-		if (snake.opening) {
+		Snake snake = StartGame.snake;
+		StartGame startGame = StartGame.startGame;
+		if (startGame.opening) {
 			g.setColor(new Color(13286784));
 			g.fillRect(0, 0, this.WIDTH, this.HEIGHT);
 			g.setColor(new Color(0, 0, 0, this.c));
@@ -31,13 +31,13 @@ public class RenderPanel extends JPanel {
 			if (this.c >= 2) {
 				this.c -= 2;
 			} else {
-				snake.opening = false;
-				snake.loading = true;
+				startGame.opening = false;
+				startGame.loading = true;
 				this.c = 0;
 			}
 		}
 
-		if (snake.loading) {
+		if (startGame.loading) {
 			g.setColor(new Color(13286784));
 			g.fillRect(0, 0, this.WIDTH, this.HEIGHT);
 			g.setColor(Color.white);
@@ -58,14 +58,14 @@ public class RenderPanel extends JPanel {
 			g.drawString("Pres Space continue", this.WIDTH / 2 - 140, this.HEIGHT / 2 + 30);
 		}
 
-		if ((!snake.loading) && (!snake.opening)) {
+		if ((!startGame.loading) && (!startGame.opening)) {
 			g.setColor(new Color(13286784));
 			g.fillRect(0, 0, this.WIDTH, this.HEIGHT);
 
 			// crtanje 1. zmije
-			if ((snake.players > 0) && (snake.start)) {
+			if ((startGame.players > 0) && (startGame.start)) {
 				g.setColor(new Color(7783598).darker());
-				if (snake.theme == 2) {
+				if (startGame.theme == 2) {
 					for (Point point : snake.snakeParts) {
 						g.fillOval(point.x * 10, point.y * 10, 10, 10);
 					}
@@ -79,9 +79,9 @@ public class RenderPanel extends JPanel {
 			}
 
 			// crtanje 2. zmije
-			if ((snake.players == 2) && (snake.start)) {
+			if ((startGame.players == 2) && (startGame.start)) {
 				g.setColor(new Color(4788598).darker());
-				if (snake.theme == 2) {
+				if (startGame.theme == 2) {
 					for (Point point : snake.snakePartsTwo) {
 						g.fillOval(point.x * 10, point.y * 10, 10, 10);
 					}
@@ -98,7 +98,7 @@ public class RenderPanel extends JPanel {
 					for (Point pointTwo : snake.snakePartsTwo) {
 						if (point.equals(pointTwo)) {
 							g.setColor(Color.blue.darker());
-							if (snake.theme == 2) {
+							if (startGame.theme == 2) {
 								g.fillOval(point.x * 10, point.y * 10, 10, 10);
 							} else {
 								g.fillRect(point.x * 10, point.y * 10, 10, 10);
@@ -108,39 +108,39 @@ public class RenderPanel extends JPanel {
 				}
 			}
 
-			if (!snake.menu) {
+			if (!startGame.menu) {
 				g.setColor(new Color(14183536).darker());
 				g.fillOval(snake.cherry.x * 10, snake.cherry.y * 10, 10, 10);
 			}
 
-			if ((snake.gameMode == 2) && (!snake.menu)) {
+			if ((startGame.gameMode == 2) && (!startGame.menu)) {
 				g.setColor(Color.BLACK);
 				g.setFont(new Font("Arial", 1, 10));
 				g.drawString("+ " + (1 + (snake.score + snake.scoreTwo) / 10), snake.cherry.x * 10,
 						snake.cherry.y * 10);
 			}
 
-			if ((snake.players == 1) && (!snake.menu)) {
+			if ((startGame.players == 1) && (!startGame.menu)) {
 				g.setColor(Color.WHITE);
 				g.setFont(new Font("Arial", 1, 20));
-				this.str = ("Score: " + snake.score + ", Time: " + snake.time / 20);
+				this.str = ("Score: " + snake.score + ", Time: " + startGame.time / 20);
 				g.drawString(this.str, getWidth() / 2 - this.str.length() * 6, 30);
 			}
 
-			if ((snake.players == 2) && (!snake.menu)) {
+			if ((startGame.players == 2) && (!startGame.menu)) {
 				g.setColor(Color.WHITE);
 				g.setFont(new Font("Arial", 1, 20));
-				if (snake.gameMode == 2) {
+				if (startGame.gameMode == 2) {
 					this.str = ("Score: " + snake.score + " / 300");
 				} else {
 					this.str = ("Score: " + snake.score);
 				}
 
 				g.drawString(this.str, 10, 30);
-				this.str = ("Time: " + snake.time / 20);
+				this.str = ("Time: " + startGame.time / 20);
 				g.drawString(this.str, getWidth() / 2 - this.str.length() * 6, 30);
 
-				if (snake.gameMode == 2) {
+				if (startGame.gameMode == 2) {
 					this.str = ("Score: " + snake.scoreTwo + " / 300");
 				} else {
 					this.str = ("Score: " + snake.scoreTwo);
@@ -148,7 +148,7 @@ public class RenderPanel extends JPanel {
 				g.drawString(this.str, getWidth() - this.str.length() * 10, 30);
 			}
 
-			if ((snake.overOne) && (snake.players == 1)) {
+			if ((snake.overOne) && (startGame.players == 1)) {
 				g.setColor(Color.WHITE);
 				g.setFont(new Font("Arial", 1, 100));
 				g.drawString("Game Over!", this.WIDTH / 2 - 280, this.HEIGHT / 2 - 50);
@@ -157,7 +157,7 @@ public class RenderPanel extends JPanel {
 				g.drawString("Pres Esc to exit", this.WIDTH / 2 - 115, this.HEIGHT / 2 + 30);
 			}
 
-			if ((snake.overOne) && (snake.players == 2) && (!snake.overTwo)) {
+			if ((snake.overOne) && (startGame.players == 2) && (!snake.overTwo)) {
 				g.setColor(Color.WHITE);
 				g.setFont(new Font("Arial", 1, 100));
 				g.drawString("Player Two Wins!", this.WIDTH / 2 - 390, this.HEIGHT / 2 - 50);
@@ -166,7 +166,7 @@ public class RenderPanel extends JPanel {
 				g.drawString("Pres Esc to exit", this.WIDTH / 2 - 115, this.HEIGHT / 2 + 30);
 			}
 
-			if (snake.paused) {
+			if (startGame.paused) {
 				g.setColor(Color.WHITE);
 				g.setFont(new Font("Arial", 1, 100));
 				g.drawString("Paused", this.WIDTH / 2 - 190, this.HEIGHT / 2 - 50);
@@ -174,7 +174,7 @@ public class RenderPanel extends JPanel {
 				g.drawString("Pres Space to continue", this.WIDTH / 2 - 175, this.HEIGHT / 2);
 			}
 
-			if ((snake.overTwo) && (snake.players == 2) && (!snake.overOne)) {
+			if ((snake.overTwo) && (startGame.players == 2) && (!snake.overOne)) {
 				g.setColor(Color.WHITE);
 				g.setFont(new Font("Arial", 1, 100));
 				g.drawString("Player One Wins!", this.WIDTH / 2 - 390, this.HEIGHT / 2 - 50);
@@ -183,7 +183,7 @@ public class RenderPanel extends JPanel {
 				g.drawString("Pres Esc to exit", this.WIDTH / 2 - 115, this.HEIGHT / 2 + 30);
 			}
 
-			if ((snake.overTwo) && (snake.players == 2) && (snake.overOne)) {
+			if ((snake.overTwo) && (startGame.players == 2) && (snake.overOne)) {
 				g.setColor(Color.WHITE);
 				g.setFont(new Font("Arial", 1, 100));
 				g.drawString("Nobody Wins!", this.WIDTH / 2 - 330, this.HEIGHT / 2 - 50);
@@ -192,14 +192,14 @@ public class RenderPanel extends JPanel {
 				g.drawString("Pres Esc to exit", this.WIDTH / 2 - 115, this.HEIGHT / 2 + 30);
 			}
 
-			if (snake.menu) {
+			if (startGame.menu) {
 				g.setColor(Color.WHITE);
 				g.setFont(new Font("Arial", 1, 100));
 				g.drawString("Snake Game", this.WIDTH / 2 - 280, this.HEIGHT / 2 - 50);
 				g.setFont(new Font("Arial", 1, 25));
 
-				if (snake.menu) {
-					if (snake.players == 1) {
+				if (startGame.menu) {
+					if (startGame.players == 1) {
 						g.setColor(Color.GREEN);
 					} else {
 						g.setColor(Color.GREEN.darker());
@@ -209,7 +209,7 @@ public class RenderPanel extends JPanel {
 					g.setColor(Color.WHITE);
 					g.drawString("1 Player", this.WIDTH / 2 - 270, this.HEIGHT / 2 + 15);
 
-					if (snake.players == 2) {
+					if (startGame.players == 2) {
 						g.setColor(Color.GREEN);
 					} else {
 						g.setColor(Color.GREEN.darker());
@@ -219,7 +219,7 @@ public class RenderPanel extends JPanel {
 					g.setColor(Color.WHITE);
 					g.drawString("2 Players", this.WIDTH / 2 + 185, this.HEIGHT / 2 + 15);
 
-					if (snake.option == 1) {
+					if (startGame.option == 1) {
 						g.setColor(Color.lightGray);
 					} else {
 						g.setColor(Color.gray);
@@ -229,7 +229,7 @@ public class RenderPanel extends JPanel {
 					g.setColor(Color.WHITE);
 					g.drawString("Normal mode", this.WIDTH / 2 - 78, this.HEIGHT / 2 - 1);
 
-					if (snake.option == 2) {
+					if (startGame.option == 2) {
 						g.setColor(Color.lightGray);
 					} else {
 						g.setColor(Color.gray);
@@ -239,7 +239,7 @@ public class RenderPanel extends JPanel {
 					g.setColor(Color.WHITE);
 					g.drawString("Hard mode", this.WIDTH / 2 - 65, this.HEIGHT / 2 + 30);
 
-					if (snake.option == 3) {
+					if (startGame.option == 3) {
 						g.setColor(Color.lightGray);
 					} else {
 						g.setColor(Color.gray);
@@ -249,7 +249,7 @@ public class RenderPanel extends JPanel {
 					g.setColor(Color.WHITE);
 					g.drawString("Exit Game", this.WIDTH / 2 - 60, this.HEIGHT / 2 + 61);
 
-					if (snake.theme == 1) {
+					if (startGame.theme == 1) {
 						g.setColor(Color.gray);
 					} else {
 						g.setColor(Color.lightGray);
@@ -259,7 +259,7 @@ public class RenderPanel extends JPanel {
 					g.setColor(new Color(13286784));
 					g.fillRect(this.WIDTH / 2 - 240, this.HEIGHT / 2 + 160, 200, 130);
 
-					if (snake.theme == 2) {
+					if (startGame.theme == 2) {
 						g.setColor(Color.gray);
 					} else {
 						g.setColor(Color.lightGray);
